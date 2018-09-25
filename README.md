@@ -1,4 +1,4 @@
-# Neighborhood Map Project 8 for Udacity FEND
+# Neighborhood Map Project 7 for Udacity FEND
 
 ## Create React App
 
