@@ -15,3 +15,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   npm install
   npm start
   ```
+
+## Resources
+
+* Google Maps API: [https://developers.google.com/maps/documentation/javascript/tutorial](https://developers.google.com/maps/documentation/javascript/tutorial)
