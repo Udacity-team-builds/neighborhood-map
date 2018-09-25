@@ -4,8 +4,17 @@ import './App.css';
 
 class App extends Component {
 
+  componentDidMount() {
+    this.renderMap()
+  }
+
+  renderMap = () => {
+    loadScript("https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyCcy8mnVTHRmKX8ubNE38RuSV5et15HNiQ&v=3&callback=initMap")
+    window.initMap = this.initMap
+  }
+
   initMap = () => {
-    var map = new google.maps.Map(document.getElementById('map'), {
+    var map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: -34.397, lng: 150.644},
       zoom: 8
     });
@@ -19,11 +28,6 @@ class App extends Component {
     );
   }
 }
-
-/*
-<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyCcy8mnVTHRmKX8ubNE38RuSV5et15HNiQ&v=3&callback=initMap">
-</script>
-*/
 
 function loadScript(url) {
   var index = window.document.getElementsByTagName('script')[0]
