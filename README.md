@@ -19,6 +19,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Resources
 
 * Google Maps API: [https://developers.google.com/maps/documentation/javascript/tutorial](https://developers.google.com/maps/documentation/javascript/tutorial)
+* Google Maps API Geocode Tool: [Find the LatLong of a location](https://google-developers.appspot.com/maps/documentation/utils/geocoder/)
+* Google Maps API Markers: [Markers](https://developers.google.com/maps/documentation/javascript/markers)
 * Foursquare Developers: [https://developer.foursquare.com/](https://developer.foursquare.com/)
 * Axios: [Promise based HTTP client for the browser and node.js](https://github.com/axios/axios)
 * Elharony's YouTube walkthrough: [Udacity | Neighborhood Map - Intro and Creating our React App](https://www.youtube.com/watch?v=ywdxLNjhBYw&t=1s)

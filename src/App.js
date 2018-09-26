@@ -44,7 +44,12 @@ class App extends Component {
     var map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 37.338208, lng: -121.886329},
       zoom: 8
-    });
+    })
+
+    var marker = new window.google.maps.Marker({
+      position: {lat: 37.338208, lng: -121.886329},
+      map: map
+    })
   }
 
   render() {
