@@ -20,3 +20,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 * Google Maps API: [https://developers.google.com/maps/documentation/javascript/tutorial](https://developers.google.com/maps/documentation/javascript/tutorial)
 * Foursquare Developers: [https://developer.foursquare.com/](https://developer.foursquare.com/)
+* Elharony's YouTube walkthrough: [Udacity | Neighborhood Map - Intro and Creating our React App](https://www.youtube.com/watch?v=ywdxLNjhBYw&t=1s)
