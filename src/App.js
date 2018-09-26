@@ -40,20 +40,39 @@ class App extends Component {
   }
 
   initMap = () => {
+
+    // Create A Map
     var map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 37.338208, lng: -121.886329},
-      zoom: 8
+      zoom: 13
     })
 
+    // Create An Info Window
+    var infowindow = new window.google.maps.InfoWindow()
+
+    // Display Dynamic Markers
     this.state.venues.map(myVenue => {
 
+      var contentString = `${myVenue.venue.name}`
+
+      // Create A Marker
       var marker = new window.google.maps.Marker({
         position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
-        map: map
+        map: map,
+        title: myVenue.venue.name
+      })
+
+      // Click On A Marker
+      marker.addListener('click', function() {
+
+        // Change The Content
+        infowindow.setContent(contentString)
+
+        // Open An InfoWindow
+        infowindow.open(map, marker);
       })
 
     })
-
   }
 
   render() {
