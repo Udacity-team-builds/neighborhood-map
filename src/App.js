@@ -11,7 +11,6 @@ class App extends Component {
 
   componentDidMount() {
     this.getVenues()
-    this.renderMap()
   }
 
   renderMap = () => {
@@ -33,7 +32,7 @@ class App extends Component {
       .then(response => {
         this.setState({
           venues: response.data.response.groups[0].items
-        })
+        }, this.renderMap())
       })
       .catch(error => {
         console.log("ERROR!! " + error)
@@ -46,10 +45,15 @@ class App extends Component {
       zoom: 8
     })
 
-    var marker = new window.google.maps.Marker({
-      position: {lat: 37.338208, lng: -121.886329},
-      map: map
+    this.state.venues.map(myVenue => {
+
+      var marker = new window.google.maps.Marker({
+        position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
+        map: map
+      })
+
     })
+
   }
 
   render() {
