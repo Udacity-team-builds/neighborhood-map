@@ -13,6 +13,7 @@ class App extends Component {
 
   componentDidMount() {
     this.getVenues();
+    document.title = 'Places around the South Bay Area';
   }
 
   renderMap = () => {
@@ -48,33 +49,34 @@ class App extends Component {
   };
 
   initMap = () => {
+    // Create An Info Window
+    let infowindow = new window.google.maps.InfoWindow();
+
     // Create A Map
-    var map = new window.google.maps.Map(document.getElementById('map'), {
+    const map = new window.google.maps.Map(document.getElementById('map'), {
       center: { lat: 37.338208, lng: -121.886329 },
       zoom: 13
     });
 
-    // Create An Info Window
-    var infowindow = new window.google.maps.InfoWindow();
-
     // Display Dynamic Markers
-    this.state.venues.map(myVenue => {
-      var contentString = `${myVenue.venue.name}`;
+    this.state.venues.forEach(myVenue => {
+      let nameOfVenue = `${myVenue.venue.name}`;
 
       // Create A Marker
-      var marker = new window.google.maps.Marker({
+      let marker = new window.google.maps.Marker({
         position: {
           lat: myVenue.venue.location.lat,
           lng: myVenue.venue.location.lng
         },
         map: map,
+        animation: window.google.maps.Animation.DROP,
         title: myVenue.venue.name
       });
 
       // Click On A Marker
       marker.addListener('click', function() {
         // Change The Content
-        infowindow.setContent(contentString);
+        infowindow.setContent(nameOfVenue);
 
         // Open An InfoWindow
         infowindow.open(map, marker);
