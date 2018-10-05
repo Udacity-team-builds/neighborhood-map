@@ -12,18 +12,18 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getVenues();
+    this.localPlaces();
     document.title = 'Places around the South Bay Area';
   }
 
-  renderMap = () => {
+  startMap = () => {
     loadScript(
       'https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyCcy8mnVTHRmKX8ubNE38RuSV5et15HNiQ&v=3&callback=initMap'
     );
     window.initMap = this.initMap;
   };
 
-  getVenues = () => {
+  localPlaces = () => {
     const endPoint = 'https://api.foursquare.com/v2/venues/explore?';
     const parameters = {
       client_id: 'HK5FLRYBMQ2AO2JYR4VVGU5ZXKB4B0N2B0YLOOGHCKXDD0EZ',
@@ -40,11 +40,13 @@ class App extends Component {
           {
             venues: response.data.response.groups[0].items
           },
-          this.renderMap()
+          this.startMap()
         );
       })
       .catch(error => {
-        console.log('ERROR!! ' + error);
+        console.log(
+          'ERROR: ' + error + '. Please refresh your page to try again.'
+        );
       });
   };
 
