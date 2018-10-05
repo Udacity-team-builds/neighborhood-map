@@ -17,8 +17,9 @@ class App extends Component {
   }
 
   startMap = () => {
+    const API = 'AIzaSyCcy8mnVTHRmKX8ubNE38RuSV5et15HNiQ';
     loadScript(
-      'https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyCcy8mnVTHRmKX8ubNE38RuSV5et15HNiQ&v=3&callback=initMap'
+      `https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=${API}&v=3&callback=initMap`
     );
     window.initMap = this.initMap;
   };
