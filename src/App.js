@@ -15,11 +15,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.localPlaces();
+    this.getVenues();
     document.title = 'Bay Area Ice Cream Locator';
   }
 
-  startMap = () => {
+  renderMap = () => {
     const GoogleMapsAPI = 'AIzaSyCcy8mnVTHRmKX8ubNE38RuSV5et15HNiQ';
     loadScript(
       `https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=${GoogleMapsAPI}&v=3&callback=initMap`
@@ -27,14 +27,16 @@ class App extends Component {
     window.initMap = this.initMap;
   };
 
-  localPlaces = () => {
+  getVenues = () => {
     const endPoint = 'https://api.foursquare.com/v2/venues/explore?';
     const parameters = {
       client_id: 'HK5FLRYBMQ2AO2JYR4VVGU5ZXKB4B0N2B0YLOOGHCKXDD0EZ',
       client_secret: 'SOZXIHAVVLHETXOGTSXOIOA5FKCPWUGNQCW1GC3L5TIF31PK',
       query: 'icecream',
+      ll: '37.338208, -121.886329',
       near: 'San Jose,CA',
-      v: '20182507'
+      v: '20182507',
+      limit: 15
     };
 
     axios
@@ -44,46 +46,59 @@ class App extends Component {
           {
             venues: response.data.response.groups[0].items
           },
-          this.startMap()
+          this.renderMap()
         );
       })
       .catch(error => {
-        console.log(
-          'ERROR: ' + error + '. Please refresh your page to try again.'
-        );
+        console.log('ERROR!! ' + error);
       });
   };
 
   initMap = () => {
-    // Create An Info Window
-    let infowindow = new window.google.maps.InfoWindow();
-
     // Create A Map
     const map = new window.google.maps.Map(document.getElementById('map'), {
-      center: { lat: 37.338208, lng: -121.886329 },
+      center: {
+        lat: 37.338208,
+        lng: -121.886329
+      },
       zoom: 12
     });
 
+    // Create An Info Window
+    const infowindow = new window.google.maps.InfoWindow();
+
     // Display Dynamic Markers
     this.state.venues.forEach(myVenue => {
-      let nameOfVenue = `${myVenue.venue.name}`;
+      const infoString = `
+        <h4>${myVenue.venue.name}</h4>
+        <p>
+          Street Address: ${myVenue.venue.location.address}
+        </p>`;
 
       // Create A Marker
-      let marker = new window.google.maps.Marker({
+      const marker = new window.google.maps.Marker({
         position: {
           lat: myVenue.venue.location.lat,
           lng: myVenue.venue.location.lng
         },
         map: map,
-        animation: window.google.maps.Animation.DROP,
-        title: myVenue.venue.name
+        title: myVenue.venue.name,
+        id: myVenue.venue.id,
+        animation: window.google.maps.Animation.DROP
       });
 
       // Click On A Marker
       marker.addListener('click', function() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        }
+        setTimeout(() => {
+          marker.setAnimation(null);
+        }, 1000);
         // Change The Content
-        infowindow.setContent(nameOfVenue);
-
+        infowindow.setContent(infoString);
         // Open An InfoWindow
         infowindow.open(map, marker);
       });
@@ -92,10 +107,10 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
+      <div className="App">
         <div className="d-flex flex-row bd-highlight mb-3">
           <Header />
-          <SearchBar />
+          <SearchBar venues={this.state.venues} />
           <Map />
         </div>
       </div>
