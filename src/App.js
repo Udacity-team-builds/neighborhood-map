@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+import Header from './components/Header';
+import SearchBar from './components/SearchBar';
+import Map from './components/Map';
 import axios from 'axios';
 
 class App extends Component {
@@ -29,8 +32,8 @@ class App extends Component {
     const parameters = {
       client_id: 'HK5FLRYBMQ2AO2JYR4VVGU5ZXKB4B0N2B0YLOOGHCKXDD0EZ',
       client_secret: 'SOZXIHAVVLHETXOGTSXOIOA5FKCPWUGNQCW1GC3L5TIF31PK',
-      query: 'food',
-      near: 'San Jose',
+      query: 'icecream',
+      near: 'San Jose,CA',
       v: '20182507'
     };
 
@@ -58,7 +61,7 @@ class App extends Component {
     // Create A Map
     const map = new window.google.maps.Map(document.getElementById('map'), {
       center: { lat: 37.338208, lng: -121.886329 },
-      zoom: 13
+      zoom: 12
     });
 
     // Display Dynamic Markers
@@ -89,9 +92,13 @@ class App extends Component {
 
   render() {
     return (
-      <main>
-        <div id="map" />
-      </main>
+      <div className="app">
+        <div className="d-flex flex-row bd-highlight mb-3">
+          <Header />
+          <SearchBar />
+          <Map />
+        </div>
+      </div>
     );
   }
 }
