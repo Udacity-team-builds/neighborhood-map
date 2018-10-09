@@ -16,7 +16,7 @@ class App extends Component {
 
   componentDidMount() {
     this.localPlaces();
-    document.title = 'My Favorite Bay Area Ice Cream Places';
+    document.title = 'Bay Area Ice Cream Locator';
   }
 
   startMap = () => {
