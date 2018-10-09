@@ -19,18 +19,18 @@ class SearchBar extends Component {
     }
     return (
       <div id="search-bar" className="p-2 bd-highlight">
-        <div className="list-venues-top">
+        <div>
           <input
-            className="search-venues"
+            className="form-control"
             type="text"
             value={this.state.query}
             onChange={event => this.updateQuery(event.target.value)}
             placeholder="Search Venues"
           />
         </div>
-        <ul className="venue-list">
+        <ul className="list-group">
           {showingVenues.map(showingVenue => (
-            <li key={showingVenue.venue.id} className="venue-list-item">
+            <li key={showingVenue.venue.id} className="list-group-item">
               <p>{showingVenue.venue.name}</p>
             </li>
           ))}

@@ -4,6 +4,7 @@ import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import Map from './components/Map';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.css';
 
 class App extends Component {
   constructor(props) {
@@ -108,10 +109,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Header />
+
         <div className="d-flex flex-row bd-highlight mb-3">
-          <Header />
-          <SearchBar venues={this.state.venues} />
-          <Map />
+          <SearchBar className="p-2 bd-highlight" venues={this.state.venues} />
+          <Map className="p-2 bd-highlight" />
         </div>
       </div>
     );
