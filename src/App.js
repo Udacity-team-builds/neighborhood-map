@@ -7,22 +7,17 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 
 class App extends Component {
-  state = {
-      venues: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      venues: [],
+      allMarkers: []
     };
   }
 
   componentDidMount() {
-<<<<<<< HEAD
-    this.getVenues();
-    document.title = 'My Favorite Bay Area Ice Cream Places';
-||||||| merged common ancestors
-    this.localPlaces();
-    document.title = 'Places around the South Bay Area';
-=======
     this.getVenues();
     document.title = 'Bay Area Ice Cream Locator';
->>>>>>> temp-work
   }
 
   renderMap = () => {
@@ -33,44 +28,6 @@ class App extends Component {
     window.initMap = this.initMap;
   };
 
-<<<<<<< HEAD
-getVenues = () => {
-  const endPoint = 'https://api.foursquare.com/v2/venues/explore?';
-  const parameters = {
-    client_id: 'HK5FLRYBMQ2AO2JYR4VVGU5ZXKB4B0N2B0YLOOGHCKXDD0EZ',
-    client_secret: 'SOZXIHAVVLHETXOGTSXOIOA5FKCPWUGNQCW1GC3L5TIF31PK',
-    query: 'icecream',
-    ll: '37.338208, -121.886329',
-    radius: '1000',
-    v: '20180910',
-    limit: 12
-||||||| merged common ancestors
-  localPlaces = () => {
-    const endPoint = 'https://api.foursquare.com/v2/venues/explore?';
-    const parameters = {
-      client_id: 'HK5FLRYBMQ2AO2JYR4VVGU5ZXKB4B0N2B0YLOOGHCKXDD0EZ',
-      client_secret: 'SOZXIHAVVLHETXOGTSXOIOA5FKCPWUGNQCW1GC3L5TIF31PK',
-      query: 'icecream',
-      near: 'San Jose,CA',
-      v: '20182507'
-    };
-
-    axios
-      .get(endPoint + new URLSearchParams(parameters))
-      .then(response => {
-        this.setState(
-          {
-            venues: response.data.response.groups[0].items
-          },
-          this.startMap()
-        );
-      })
-      .catch(error => {
-        console.log(
-          'ERROR: ' + error + '. Please refresh your page to try again.'
-        );
-      });
-=======
   getVenues = () => {
     const endPoint = 'https://api.foursquare.com/v2/venues/explore?';
     const parameters = {
@@ -96,33 +53,8 @@ getVenues = () => {
       .catch(error => {
         console.log('ERROR!! ' + error);
       });
->>>>>>> temp-work
   };
 
-<<<<<<< HEAD
-  axios
-    .get(endPoint + new URLSearchParams(parameters))
-    .then(response => {
-      this.setState(
-        {
-          venues: response.data.response.groups[0].items
-        },
-        this.renderMap()
-      );
-    })
-    .catch(error => {
-      console.log('ERROR! ' + error);
-    });
-};
-
-  initMap = () => {
-||||||| merged common ancestors
-  initMap = () => {
-    // Create An Info Window
-    let infowindow = new window.google.maps.InfoWindow();
-
-    // Create A Map
-=======
   initMap = () => {
     // Snazzy Maps
     var styles = [
@@ -317,97 +249,44 @@ getVenues = () => {
       }
     ];
     // Create A Map
->>>>>>> temp-work
     const map = new window.google.maps.Map(document.getElementById('map'), {
-<<<<<<< HEAD
-      center: { lat: 37.338208, lng: -121.886329 },
-      zoom: 14
-||||||| merged common ancestors
-      center: { lat: 37.338208, lng: -121.886329 },
-      zoom: 12
-=======
       center: {
         lat: 37.338208,
         lng: -121.886329
       },
       zoom: 12,
       styles: styles
->>>>>>> temp-work
     });
-<<<<<<< HEAD
-    const infowindow = new window.google.maps.InfoWindow();
-||||||| merged common ancestors
-
-    // Display Dynamic Markers
-=======
 
     // Create An Info Window
     const infowindow = new window.google.maps.InfoWindow();
 
     // Display Dynamic Markers
->>>>>>> temp-work
     this.state.venues.forEach(myVenue => {
-<<<<<<< HEAD
-      const infoString = `<h4>${myVenue.venue.name}</h4><p>Street Address: ${
-        myVenue.venue.location.address
-      }</p><p>Distance from Harpa: ${
-        myVenue.venue.location.distance
-      } meters</p>`;
-      const marker = new window.google.maps.Marker({
-||||||| merged common ancestors
-      let nameOfVenue = `${myVenue.venue.name}`;
-
-      // Create A Marker
-      let marker = new window.google.maps.Marker({
-=======
       const infoString = `
         <h4>${myVenue.venue.name}</h4>
         <p>${myVenue.venue.location.address}<br>${
         myVenue.venue.location.city
-      }, ${myVenue.venue.location.state} ${
+        }, ${myVenue.venue.location.state} ${
         myVenue.venue.location.postalCode
-      }</p>
+        }</p>
         `;
       const markerImage = 'http://techsnazzy.com/assets/img/ice-cream.png';
       // Create A Marker
       const marker = new window.google.maps.Marker({
->>>>>>> temp-work
         position: {
           lat: myVenue.venue.location.lat,
           lng: myVenue.venue.location.lng
         },
         map: map,
-<<<<<<< HEAD
-        title: myVenue.venue.name,
-        id: myVenue.venue.id,
-        animation: window.google.maps.Animation.DROP
-||||||| merged common ancestors
-        animation: window.google.maps.Animation.DROP,
-        title: myVenue.venue.name
-=======
         title: myVenue.venue.name,
         icon: markerImage,
         id: myVenue.venue.id,
         animation: window.google.maps.Animation.DROP
->>>>>>> temp-work
       });
-      marker.addListener('click', function() {
-<<<<<<< HEAD
-        if (marker.getAnimation() !== null) {
-          marker.setAnimation(null);
-        } else {
-          marker.setAnimation(window.google.maps.Animation.BOUNCE);
-        }
-        setTimeout(() => {
-          marker.setAnimation(null);
-        }, 1000);
-        infowindow.setContent(infoString);
-||||||| merged common ancestors
-        // Change The Content
-        infowindow.setContent(nameOfVenue);
 
-        // Open An InfoWindow
-=======
+      // Click On A Marker
+      marker.addListener('click', function () {
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null);
         } else {
@@ -419,7 +298,6 @@ getVenues = () => {
         // Change The Content
         infowindow.setContent(infoString);
         // Open An InfoWindow
->>>>>>> temp-work
         infowindow.open(map, marker);
       });
     });
@@ -427,28 +305,12 @@ getVenues = () => {
 
   render() {
     return (
-<<<<<<< HEAD
-      <div id="app-container"className="app">
-||||||| merged common ancestors
-      <div className="app">
-=======
       <div className="App">
         <Header />
 
->>>>>>> temp-work
         <div className="d-flex flex-row bd-highlight mb-3">
-<<<<<<< HEAD
-          <Header />
-          <SearchBar venues={this.state.venues} />
-          <Map />
-||||||| merged common ancestors
-          <Header />
-          <SearchBar />
-          <Map />
-=======
           <SearchBar className="p-2 bd-highlight" venues={this.state.venues} />
           <Map className="p-2 bd-highlight" />
->>>>>>> temp-work
         </div>
       </div>
     );
