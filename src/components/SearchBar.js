@@ -21,7 +21,7 @@ class SearchBar extends Component {
       <div id="search-bar" className="p-2 bd-highlight">
         <div>
           <input
-            className="form-control"
+            className="form-control text-center"
             type="text"
             value={this.state.query}
             onChange={event => this.updateQuery(event.target.value)}

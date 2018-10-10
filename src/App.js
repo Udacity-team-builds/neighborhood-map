@@ -37,7 +37,7 @@ class App extends Component {
       ll: '37.338208, -121.886329',
       near: 'San Jose,CA',
       v: '20182507',
-      limit: 15
+      limit: 10
     };
 
     axios
@@ -56,6 +56,7 @@ class App extends Component {
   };
 
   initMap = () => {
+    // Snazzy Maps
     var styles = [
       {
         featureType: 'landscape.man_made',
@@ -264,9 +265,12 @@ class App extends Component {
     this.state.venues.forEach(myVenue => {
       const infoString = `
         <h4>${myVenue.venue.name}</h4>
-        <p>
-          Street Address: ${myVenue.venue.location.address}
-        </p>`;
+        <p>${myVenue.venue.location.address}<br>${
+        myVenue.venue.location.city
+      }, ${myVenue.venue.location.state} ${
+        myVenue.venue.location.postalCode
+      }</p>
+        `;
       const markerImage = 'http://techsnazzy.com/assets/img/ice-cream.png';
       // Create A Marker
       const marker = new window.google.maps.Marker({
