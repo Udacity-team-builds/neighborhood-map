@@ -4,11 +4,11 @@ This is Project 7 for the Udacity FEND course. This application uses the Google 
 
 ## Table of Contents
 
-- [Creation](#Creation)
-- [Instructions](#Instructions)
-- [Dependencies](#Dependencies)
-- [Resources](#Resources)
-- [License](#License)
+- [Creation](#creation)
+- [Instructions](#instructions)
+- [Dependencies](#dependencies)
+- [Resources](#resources)
+- [License](#license)
 
 ## Creation
 
