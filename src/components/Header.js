@@ -7,7 +7,7 @@ class Header extends Component {
       <div>
         <nav className="App-header navbar navbar-light bg-dark">
           <img src={logo} className="App-logo" alt="React Logo" />
-          <span className="title">My Favorite Bay Area Ice Cream Places</span>
+          <span className="title">Bay Area Ice Cream Locator</span>
         </nav>
       </div>
     );
