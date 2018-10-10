@@ -267,7 +267,7 @@ class App extends Component {
         <p>
           Street Address: ${myVenue.venue.location.address}
         </p>`;
-
+      const markerImage = 'http://techsnazzy.com/assets/img/ice-cream.png';
       // Create A Marker
       const marker = new window.google.maps.Marker({
         position: {
@@ -276,6 +276,7 @@ class App extends Component {
         },
         map: map,
         title: myVenue.venue.name,
+        icon: markerImage,
         id: myVenue.venue.id,
         animation: window.google.maps.Animation.DROP
       });
