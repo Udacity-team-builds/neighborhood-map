@@ -3,6 +3,8 @@ import './App.css';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import Map from './components/Map';
+import ErrorCatcher from './components/ErrorCatcher';
+import escapeRegExp from 'escape-string-regexp';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -11,7 +13,9 @@ class App extends Component {
     super(props);
     this.state = {
       venues: [],
-      allMarkers: []
+      allVenues: [],
+      allMarkers: [],
+      query: ''
     };
   }
 
@@ -45,7 +49,8 @@ class App extends Component {
       .then(response => {
         this.setState(
           {
-            venues: response.data.response.groups[0].items
+            venues: response.data.response.groups[0].items,
+            allVenues: response.data.response.groups[0].items
           },
           this.renderMap()
         );
@@ -263,14 +268,6 @@ class App extends Component {
 
     // Display Dynamic Markers
     this.state.venues.forEach(myVenue => {
-      const infoString = `
-        <h4>${myVenue.venue.name}</h4>
-        <p>${myVenue.venue.location.address}<br>${
-        myVenue.venue.location.city
-      }, ${myVenue.venue.location.state} ${
-        myVenue.venue.location.postalCode
-      }</p>
-        `;
       const markerImage = 'http://techsnazzy.com/assets/img/ice-cream.png';
       // Create A Marker
       const marker = new window.google.maps.Marker({
@@ -285,8 +282,19 @@ class App extends Component {
         animation: window.google.maps.Animation.DROP
       });
 
+      const infoString = `
+        <h4>${myVenue.venue.name}</h4>
+        <p>${myVenue.venue.location.address}<br>${
+        myVenue.venue.location.city
+      }, ${myVenue.venue.location.state} ${
+        myVenue.venue.location.postalCode
+      }</p>
+        `;
+
       // Click On A Marker
       marker.addListener('click', function() {
+        // Change The Content
+        infowindow.setContent(infoString);
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null);
         } else {
@@ -295,23 +303,56 @@ class App extends Component {
         setTimeout(() => {
           marker.setAnimation(null);
         }, 1000);
-        // Change The Content
-        infowindow.setContent(infoString);
+
         // Open An InfoWindow
         infowindow.open(map, marker);
       });
     });
   };
 
+  //Handling the search box changes
+  handleSearch = query => {
+    this.setState({ query });
+    var filterVenues;
+    var hiddenMarkers;
+    this.state.markers.map(marker => marker.setVisible(true));
+    if (query) {
+      const match = new RegExp(escapeRegExp(query), 'i');
+      filterVenues = this.state.venues.filter(site =>
+        match.test(site.venue.name)
+      );
+      this.setState({ venues: filterVenues });
+      hiddenMarkers = this.state.markers.filter(marker =>
+        filterVenues.every(site => site.venue.name !== marker.title)
+      );
+      this.itemVisibility(hiddenMarkers, false);
+      this.setState({ hiddenMarkers });
+    } else {
+      this.setState({ venues: this.state.allVenues });
+      this.itemVisibility(this.state.markers, true);
+    }
+  };
+
   render() {
     return (
-      <div className="App" role="main">
-        <Header />
-        <div className="d-flex flex-row bd-highlight mb-3">
-          <SearchBar className="p-2 bd-highlight" venues={this.state.venues} />
-          <Map className="p-2 bd-highlight" />
+      <ErrorCatcher>
+        <div className="App" role="main">
+          <Header />
+          <div className="d-flex flex-row bd-highlight mb-3">
+            <SearchBar
+              className="p-2 bd-highlight"
+              markers={this.state.markers}
+              filteredVenues={this.filteredVenues}
+              query={this.state.query}
+              clearQuery={this.clearQuery}
+              handleSearch={b => this.handleSearch(b)}
+              clickLocation={this.clickLocation}
+              venues={this.state.venues}
+            />
+            <Map className="p-2 bd-highlight" />
+          </div>
         </div>
-      </div>
+      </ErrorCatcher>
     );
   }
 }
@@ -324,9 +365,7 @@ function loadScript(url) {
   script.defer = true;
   index.parentNode.insertBefore(script, index);
   script.onerror = function() {
-    document.write(
-      'There was an error loading the Google Map. Please refresh your page to try again.'
-    );
+    document.write('Error! Map was not loaded.');
   };
 }
 

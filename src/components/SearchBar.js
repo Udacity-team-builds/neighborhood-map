@@ -9,6 +9,14 @@ class SearchBar extends Component {
   updateQuery = query => {
     this.setState({ query: query.trim() });
   };
+
+  openInfo = locationId => {
+    this.props.markers.forEach(marker => {
+      if (marker.id === locationId) {
+        window.google.maps.event.trigger(marker, 'click');
+      }
+    });
+  };
   render() {
     let showingVenues;
     if (this.state.query) {
@@ -22,11 +30,11 @@ class SearchBar extends Component {
     return (
       <div id="search-bar" className="p-2 bd-highlight">
         <div>
-          <label for="searchVenuesInput" />
           <input
             name="searchVenuesInput"
             className="form-control text-center"
             type="text"
+            aria-label="Locate ice cream"
             value={this.state.query}
             onChange={event => this.updateQuery(event.target.value)}
             placeholder="Search Venues"
