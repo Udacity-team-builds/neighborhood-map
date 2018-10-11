@@ -22,9 +22,7 @@ class SearchBar extends Component {
     return (
       <div id="search-bar" className="p-2 bd-highlight">
         <div>
-          <label for="searchVenuesInput" />
           <input
-            name="searchVenuesInput"
             className="form-control text-center"
             type="text"
             value={this.state.query}
