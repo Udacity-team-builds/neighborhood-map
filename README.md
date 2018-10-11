@@ -45,7 +45,7 @@ npm start
 
 ## Notes
 
-This app was scaffolded using `create-react-app`. By default, this app runs in a development build which does come with a Service Worker. The Service Worker will only work in the production build. You can download and create a production build by running the following commands.
+This app was scaffolded using `create-react-app`. By default, this application runs in a development build which does come with a Service Worker. The Service Worker will only work in the production build. You can download and create a production build by running the following commands.
 
 ```
 npm run build
