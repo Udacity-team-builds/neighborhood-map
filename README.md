@@ -8,6 +8,7 @@ This is Project 7 for the Udacity FEND course. This application uses the Google 
 - [Instructions](#instructions)
 - [Dependencies](#dependencies)
 - [Resources](#resources)
+- [Notes](#notes)
 - [License](#license)
 
 ## Creation
@@ -41,6 +42,14 @@ npm start
 
 - Elharony's YouTube walkthrough: [Udacity | Neighborhood Map - Intro and Creating our React App](https://www.youtube.com/watch?v=ywdxLNjhBYw&t=1s)
 - Forrest Walker's YouTube walkthrough: [Neighborhood Map - Setup Project](https://www.youtube.com/watch?v=ktc8Gp9jD1k&list=PL4rQq4MQP1crXuPtruu_eijgOUUXhcUCP)
+
+## Notes
+
+This app was scaffolded using `create-react-app`. By default, this app runs in a development build which does come with a Service Worker. The Service Worker will only work in the production build. You can download and create a production build by running the following commands.
+
+```
+npm run build
+```
 
 ## License
 

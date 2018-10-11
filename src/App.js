@@ -267,9 +267,9 @@ class App extends Component {
         <h4>${myVenue.venue.name}</h4>
         <p>${myVenue.venue.location.address}<br>${
         myVenue.venue.location.city
-        }, ${myVenue.venue.location.state} ${
+      }, ${myVenue.venue.location.state} ${
         myVenue.venue.location.postalCode
-        }</p>
+      }</p>
         `;
       const markerImage = 'http://techsnazzy.com/assets/img/ice-cream.png';
       // Create A Marker
@@ -286,7 +286,7 @@ class App extends Component {
       });
 
       // Click On A Marker
-      marker.addListener('click', function () {
+      marker.addListener('click', function() {
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null);
         } else {
@@ -305,9 +305,8 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App" role="main">
         <Header />
-
         <div className="d-flex flex-row bd-highlight mb-3">
           <SearchBar className="p-2 bd-highlight" venues={this.state.venues} />
           <Map className="p-2 bd-highlight" />
@@ -324,6 +323,11 @@ function loadScript(url) {
   script.async = true;
   script.defer = true;
   index.parentNode.insertBefore(script, index);
+  script.onerror = function() {
+    document.write(
+      'There was an error loading the Google Map. Please refresh your page to try again.'
+    );
+  };
 }
 
 export default App;
