@@ -168,6 +168,8 @@ class App extends Component {
         stylers: [{ color: '#a2daf2' }]
       }
     ];
+
+    // Create a Map
     const map = new window.google.maps.Map(document.getElementById('map'), {
       center: {
         lat: 37.338208,
@@ -177,11 +179,16 @@ class App extends Component {
       styles: styles
     });
 
+    // Create an InfoWindow
     const infowindow = new window.google.maps.InfoWindow({ maxWidth: 200 });
     this.infowindow = infowindow;
 
+    // Display Dynamic Markers
     this.state.venues.forEach(myVenue => {
+      // Create a Marker Icon
       const markerImage = 'https://techsnazzy.com/assets/img/ice-cream.png';
+
+      // Create a Marker
       const marker = new window.google.maps.Marker({
         position: {
           lat: myVenue.venue.location.lat,
@@ -196,6 +203,7 @@ class App extends Component {
 
       this.state.markers.push(marker);
 
+      // Click on a Marker
       marker.addListener('click', function() {
         infowindow.setContent(`
         <h4>${myVenue.venue.name}</h4>
@@ -217,6 +225,7 @@ class App extends Component {
           marker.setAnimation(null);
         }, 1000);
 
+        // Open an InfoWindow
         infowindow.open(map, marker);
       });
 
