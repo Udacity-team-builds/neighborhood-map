@@ -199,9 +199,17 @@ class App extends Component {
       marker.addListener('click', function() {
         infowindow.setContent(`
         <h4>${myVenue.venue.name}</h4>
-        <p>${
-          myVenue.venue.location.address
-        }<br>${myVenue.venue.location.city}, ${myVenue.venue.location.state} ${myVenue.venue.location.postalCode}</p>
+        <p>${myVenue.venue.location.address}
+        <br>
+        ${
+          myVenue.venue.location.city
+        }, ${myVenue.venue.location.state} ${myVenue.venue.location.postalCode}</p>
+        <br>
+        <p>
+        ${'<a href="https://foursquare.com/v/' +
+          myVenue.venue.id +
+          '" target="_blank">Learn More...</a>'}
+        </p>
         `);
 
         marker.setAnimation(window.google.maps.Animation.BOUNCE);
