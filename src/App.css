@@ -14,6 +14,15 @@ body {
 #search-bar {
   height: 100vh;
   width: 30%;
+  float: left;
+}
+
+.venue-header {
+  font-size: 3vw;
+}
+
+.venue-text {
+  font-size: 2vw;
 }
 
 .App {
@@ -38,11 +47,39 @@ body {
   color: #61dafb;
 }
 
+.title {
+  font-size: 100%;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .App-header {
+    height: 75px;
+    font-size: calc(10px + 3vmin);
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .venue-header {
+    font-size: 4vw;
+  }
+
+  .venue-text {
+    font-size: 3vw;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .App-header {
+    height: 75px;
+    font-size: calc(10px + 4vmin);
   }
 }
