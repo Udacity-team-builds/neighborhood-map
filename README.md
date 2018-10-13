@@ -37,6 +37,7 @@ npm start
 - Google Maps API Info Windows: [Info Windows](https://developers.google.com/maps/documentation/javascript/infowindows)
 - Foursquare Developers: [https://developer.foursquare.com/](https://developer.foursquare.com/)
 - Axios: [Promise based HTTP client for the browser and node.js](https://github.com/axios/axios)
+- React Error Boundaries: [Error Boundaries](https://reactjs.org/docs/error-boundaries.html)
 
 ## Resources
 

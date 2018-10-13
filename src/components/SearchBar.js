@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 class SearchBar extends Component {
-  openInfo = locationId => {
+  openInfo = venueId => {
     this.props.markers.forEach(marker => {
-      if (marker.id === locationId) {
+      if (marker.id === venueId) {
         window.google.maps.event.trigger(marker, 'click');
       }
     });
@@ -16,28 +16,30 @@ class SearchBar extends Component {
           className="form-control text-center"
           type="text"
           autoFocus
-          placeholder="Search for Ice Cream"
+          placeholder="Search"
           aria-label="Search for Ice Cream"
           value={this.props.query}
           onChange={event => this.props.handleSearch(event.target.value)}
         />
         <ul className="list-group">
-          {this.props.venues.map(site => (
+          {this.props.venues.map(listVenues => (
             <li
               className="list-group-item"
               role="menuitem"
               onClick={() => {
-                this.openInfo(site.venue.id);
+                this.openInfo(listVenues.venue.id);
               }}
-              aria-label={site.venue.name}
+              aria-label={listVenues.venue.name}
               tabIndex="0"
-              id={site.venue.id}
-              key={site.venue.id}
+              id={listVenues.venue.id}
+              key={listVenues.venue.id}
             >
-              <br />
-              <b>{site.venue.name}</b>
-              <br />
-              <i>{site.venue.location.address}</i>
+              <h4 className="venue-header text-center">
+                {listVenues.venue.name}
+              </h4>
+              <p className="venue-text text-center">
+                {listVenues.venue.location.address}
+              </p>
             </li>
           ))}
         </ul>
