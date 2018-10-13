@@ -27,8 +27,8 @@ class App extends Component {
   renderMap = () => {
     var index = window.document.getElementsByTagName('script')[0];
     var script = window.document.createElement('script');
-    script.src =
-      'https://maps.googleapis.com/maps/api/js?key=AIzaSyCcy8mnVTHRmKX8ubNE38RuSV5et15HNiQ&callback=initMap';
+    var APIkey = 'AIzaSyCcy8mnVTHRmKX8ubNE38RuSV5et15HNiQ';
+    script.src = `https://maps.googleapis.com/maps/api/js?key=&${APIkey}callback=initMap`;
     script.async = true;
     script.defer = true;
     index.parentNode.insertBefore(script, index);
