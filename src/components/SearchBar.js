@@ -1,40 +1,43 @@
 import React, { Component } from 'react';
-import escapeRegExp from 'escape-string-regexp';
 
 class SearchBar extends Component {
-  state = {
-    query: ''
+  openInfo = locationId => {
+    this.props.markers.forEach(marker => {
+      if (marker.id === locationId) {
+        window.google.maps.event.trigger(marker, 'click');
+      }
+    });
   };
 
-  updateQuery = query => {
-    this.setState({ query: query.trim() });
-  };
   render() {
-    let showingVenues;
-    if (this.state.query) {
-      const match = new RegExp(escapeRegExp(this.state.query), 'i');
-      showingVenues = this.props.venues.filter(element =>
-        match.test(element.venue.name)
-      );
-    } else {
-      showingVenues = this.props.venues;
-    }
     return (
       <div id="search-bar" className="p-2 bd-highlight">
-        <div>
-          <input
-            className="form-control text-center"
-            type="text"
-            value={this.state.query}
-            onChange={event => this.updateQuery(event.target.value)}
-            placeholder="Search Venues"
-            tabIndex={1}
-          />
-        </div>
+        <input
+          className="form-control text-center"
+          type="text"
+          autoFocus
+          placeholder="Search for Ice Cream"
+          aria-label="Search for Ice Cream"
+          value={this.props.query}
+          onChange={event => this.props.handleSearch(event.target.value)}
+        />
         <ul className="list-group">
-          {showingVenues.map(showingVenue => (
-            <li key={showingVenue.venue.id} className="list-group-item">
-              <p>{showingVenue.venue.name}</p>
+          {this.props.venues.map(site => (
+            <li
+              className="list-group-item"
+              role="menuitem"
+              onClick={() => {
+                this.openInfo(site.venue.id);
+              }}
+              aria-label={site.venue.name}
+              tabIndex="0"
+              id={site.venue.id}
+              key={site.venue.id}
+            >
+              <br />
+              <b>{site.venue.name}</b>
+              <br />
+              <i>{site.venue.location.address}</i>
             </li>
           ))}
         </ul>

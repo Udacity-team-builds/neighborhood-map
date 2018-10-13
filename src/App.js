@@ -1,30 +1,42 @@
 import React, { Component } from 'react';
 import './App.css';
+import escapeRegExp from 'escape-string-regexp';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import Map from './components/Map';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
+import CatchErrors from './components/CatchErrors';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       venues: [],
-      allMarkers: []
+      allVenues: [],
+      markers: [],
+      hiddenMarkers: [],
+      query: ''
     };
   }
 
   componentDidMount() {
     this.getVenues();
-    document.title = 'Bay Area Ice Cream Locator';
   }
 
   renderMap = () => {
-    const GoogleMapsAPI = 'AIzaSyCcy8mnVTHRmKX8ubNE38RuSV5et15HNiQ';
-    loadScript(
-      `https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=${GoogleMapsAPI}&v=3&callback=initMap`
-    );
+    var index = window.document.getElementsByTagName('script')[0];
+    var script = window.document.createElement('script');
+    script.src =
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyCcy8mnVTHRmKX8ubNE38RuSV5et15HNiQ&callback=initMap';
+    script.async = true;
+    script.defer = true;
+    index.parentNode.insertBefore(script, index);
+    script.onerror = function() {
+      alert(
+        'There was an error loading the Google Map. Please refresh your page to try again.'
+      );
+    };
     window.initMap = this.initMap;
   };
 
@@ -35,8 +47,8 @@ class App extends Component {
       client_secret: 'SOZXIHAVVLHETXOGTSXOIOA5FKCPWUGNQCW1GC3L5TIF31PK',
       query: 'icecream',
       ll: '37.338208, -121.886329',
-      near: 'San Jose,CA',
-      v: '20182507',
+      near: 'San Jose, CA',
+      v: '20183009',
       limit: 10
     };
 
@@ -45,13 +57,15 @@ class App extends Component {
       .then(response => {
         this.setState(
           {
-            venues: response.data.response.groups[0].items
+            venues: response.data.response.groups[0].items,
+            allVenues: response.data.response.groups[0].items
           },
           this.renderMap()
         );
       })
       .catch(error => {
-        console.log('ERROR!! ' + error);
+        alert('ERROR! ' + error);
+        console.log('ERROR! ' + error);
       });
   };
 
@@ -61,194 +75,99 @@ class App extends Component {
       {
         featureType: 'landscape.man_made',
         elementType: 'geometry',
-        stylers: [
-          {
-            color: '#f9f5ed'
-          },
-          {
-            saturation: '0'
-          }
-        ]
+        stylers: [{ color: '#f9f5ed' }, { saturation: '0' }]
       },
       {
         featureType: 'landscape.natural',
         elementType: 'geometry',
-        stylers: [
-          {
-            color: '#d0e3b4'
-          }
-        ]
+        stylers: [{ color: '#d0e3b4' }]
       },
       {
         featureType: 'landscape.natural.terrain',
         elementType: 'geometry',
-        stylers: [
-          {
-            visibility: 'off'
-          }
-        ]
+        stylers: [{ visibility: 'off' }]
       },
       {
         featureType: 'poi',
         elementType: 'labels',
-        stylers: [
-          {
-            visibility: 'off'
-          }
-        ]
+        stylers: [{ visibility: 'off' }]
       },
       {
         featureType: 'poi.attraction',
         elementType: 'all',
-        stylers: [
-          {
-            visibility: 'on'
-          }
-        ]
+        stylers: [{ visibility: 'on' }]
       },
       {
         featureType: 'poi.business',
         elementType: 'all',
-        stylers: [
-          {
-            visibility: 'off'
-          }
-        ]
+        stylers: [{ visibility: 'off' }]
       },
       {
         featureType: 'poi.medical',
         elementType: 'geometry',
-        stylers: [
-          {
-            color: '#fbd3da'
-          }
-        ]
+        stylers: [{ color: '#fbd3da' }]
       },
       {
         featureType: 'poi.park',
         elementType: 'geometry',
-        stylers: [
-          {
-            color: '#bde6ab'
-          }
-        ]
+        stylers: [{ color: '#bde6ab' }]
       },
       {
         featureType: 'poi.sports_complex',
         elementType: 'all',
-        stylers: [
-          {
-            visibility: 'on'
-          }
-        ]
+        stylers: [{ visibility: 'on' }]
       },
       {
         featureType: 'road',
         elementType: 'geometry.stroke',
-        stylers: [
-          {
-            visibility: 'off'
-          }
-        ]
+        stylers: [{ visibility: 'off' }]
       },
       {
         featureType: 'road',
         elementType: 'labels',
-        stylers: [
-          {
-            visibility: 'off'
-          }
-        ]
+        stylers: [{ visibility: 'off' }]
       },
       {
         featureType: 'road.highway',
         elementType: 'geometry.fill',
-        stylers: [
-          {
-            color: '#fcfcdd'
-          },
-          {
-            saturation: '0'
-          }
-        ]
+        stylers: [{ color: '#fcfcdd' }, { saturation: '0' }]
       },
       {
         featureType: 'road.highway',
         elementType: 'geometry.stroke',
-        stylers: [
-          {
-            color: '#efd151'
-          },
-          {
-            visibility: 'on'
-          }
-        ]
+        stylers: [{ color: '#efd151' }, { visibility: 'on' }]
       },
       {
         featureType: 'road.arterial',
         elementType: 'geometry.fill',
-        stylers: [
-          {
-            color: '#ffffff'
-          }
-        ]
+        stylers: [{ color: '#ffffff' }]
       },
       {
         featureType: 'road.arterial',
         elementType: 'geometry.stroke',
-        stylers: [
-          {
-            color: '#dcdcdc'
-          },
-          {
-            visibility: 'on'
-          }
-        ]
+        stylers: [{ color: '#dcdcdc' }, { visibility: 'on' }]
       },
       {
         featureType: 'road.local',
         elementType: 'geometry.fill',
-        stylers: [
-          {
-            visibility: 'on'
-          },
-          {
-            color: '#ffffff'
-          }
-        ]
+        stylers: [{ visibility: 'on' }, { color: '#ffffff' }]
       },
       {
         featureType: 'road.local',
         elementType: 'geometry.stroke',
-        stylers: [
-          {
-            visibility: 'on'
-          },
-          {
-            color: '#dedbd3'
-          }
-        ]
+        stylers: [{ visibility: 'on' }, { color: '#dedbd3' }]
       },
       {
         featureType: 'transit.station.airport',
         elementType: 'geometry.fill',
-        stylers: [
-          {
-            color: '#cfb2db'
-          }
-        ]
+        stylers: [{ color: '#cfb2db' }]
       },
       {
         featureType: 'water',
         elementType: 'geometry',
-        stylers: [
-          {
-            color: '#a2daf2'
-          }
-        ]
+        stylers: [{ color: '#a2daf2' }]
       }
     ];
-    // Create A Map
     const map = new window.google.maps.Map(document.getElementById('map'), {
       center: {
         lat: 37.338208,
@@ -258,21 +177,11 @@ class App extends Component {
       styles: styles
     });
 
-    // Create An Info Window
-    const infowindow = new window.google.maps.InfoWindow();
+    const infowindow = new window.google.maps.InfoWindow({ maxWidth: 200 });
+    this.infowindow = infowindow;
 
-    // Display Dynamic Markers
     this.state.venues.forEach(myVenue => {
-      const infoString = `
-        <h4>${myVenue.venue.name}</h4>
-        <p>${myVenue.venue.location.address}<br>${
-        myVenue.venue.location.city
-      }, ${myVenue.venue.location.state} ${
-        myVenue.venue.location.postalCode
-      }</p>
-        `;
-      const markerImage = 'http://techsnazzy.com/assets/img/ice-cream.png';
-      // Create A Marker
+      const markerImage = 'https://techsnazzy.com/assets/img/ice-cream.png';
       const marker = new window.google.maps.Marker({
         position: {
           lat: myVenue.venue.location.lat,
@@ -285,49 +194,83 @@ class App extends Component {
         animation: window.google.maps.Animation.DROP
       });
 
-      // Click On A Marker
+      this.state.markers.push(marker);
+
       marker.addListener('click', function() {
-        if (marker.getAnimation() !== null) {
-          marker.setAnimation(null);
-        } else {
-          marker.setAnimation(window.google.maps.Animation.BOUNCE);
-        }
-        setTimeout(() => {
+        infowindow.setContent(`
+        <h4>${myVenue.venue.name}</h4>
+        <p>${
+          myVenue.venue.location.address
+        }<br>${myVenue.venue.location.city}, ${myVenue.venue.location.state} ${myVenue.venue.location.postalCode}</p>
+        `);
+
+        marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        window.setTimeout(function() {
           marker.setAnimation(null);
         }, 1000);
-        // Change The Content
-        infowindow.setContent(infoString);
-        // Open An InfoWindow
+
         infowindow.open(map, marker);
+      });
+
+      map.addListener('click', function() {
+        marker.setAnimation(null);
+        infowindow.close(map, marker);
       });
     });
   };
 
-  render() {
-    return (
-      <div className="App" role="main">
-        <Header />
-        <div className="d-flex flex-row bd-highlight mb-3">
-          <SearchBar className="p-2 bd-highlight" venues={this.state.venues} />
-          <Map className="p-2 bd-highlight" />
-        </div>
-      </div>
-    );
-  }
-}
-
-function loadScript(url) {
-  var index = window.document.getElementsByTagName('script')[0];
-  var script = window.document.createElement('script');
-  script.src = url;
-  script.async = true;
-  script.defer = true;
-  index.parentNode.insertBefore(script, index);
-  script.onerror = function() {
-    document.write(
-      'There was an error loading the Google Map. Please refresh your page to try again.'
-    );
+  itemVisibility = (arr, boo) => {
+    return arr.forEach(marker => marker.setVisible(boo));
   };
+
+  handleSearch = query => {
+    this.setState({ query });
+    let filterVenues;
+    let hiddenMarkers;
+    this.state.markers.map(marker => marker.setVisible(true));
+    if (query) {
+      const match = new RegExp(escapeRegExp(query), 'i');
+      filterVenues = this.state.venues.filter(myVenue =>
+        match.test(myVenue.venue.name)
+      );
+      this.setState({ venues: filterVenues });
+      hiddenMarkers = this.state.markers.filter(marker =>
+        filterVenues.every(myVenue => myVenue.venue.name !== marker.title)
+      );
+      this.itemVisibility(hiddenMarkers, false);
+      this.setState({ hiddenMarkers });
+    } else {
+      this.setState({ venues: this.state.allVenues });
+      this.itemVisibility(this.state.markers, true);
+    }
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return <div aria-label="Error">Oops, Something went wrong!</div>;
+    } else {
+      return (
+        <div className="App" role="main">
+          <CatchErrors>
+            <Header />
+            <div id="container">
+              <SearchBar
+                className="d-flex flex-row bd-highlight mb-3"
+                markers={this.state.markers}
+                filteredVenues={this.filteredVenues}
+                query={this.state.query}
+                clearQuery={this.clearQuery}
+                handleSearch={b => this.handleSearch(b)}
+                clickLocation={this.clickLocation}
+                venues={this.state.venues}
+              />
+              <Map className="p-2 bd-highlight" />
+            </div>
+          </CatchErrors>
+        </div>
+      );
+    }
+  }
 }
 
 export default App;
