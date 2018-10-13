@@ -227,7 +227,7 @@ class App extends Component {
     });
   };
 
-  itemVisibility = (arr, boo) => {
+  markerVisibility = (arr, boo) => {
     return arr.forEach(marker => marker.setVisible(boo));
   };
 
@@ -245,11 +245,11 @@ class App extends Component {
       hiddenMarkers = this.state.markers.filter(marker =>
         filterVenues.every(myVenue => myVenue.venue.name !== marker.title)
       );
-      this.itemVisibility(hiddenMarkers, false);
+      this.markerVisibility(hiddenMarkers, false);
       this.setState({ hiddenMarkers });
     } else {
       this.setState({ venues: this.state.allVenues });
-      this.itemVisibility(this.state.markers, true);
+      this.markerVisibility(this.state.markers, true);
     }
   };
 
@@ -265,7 +265,7 @@ class App extends Component {
               <SearchBar
                 className="d-flex flex-row bd-highlight mb-3"
                 markers={this.state.markers}
-                filteredVenues={this.filteredVenues}
+                searchedVenues={this.searchedVenues}
                 query={this.state.query}
                 clearQuery={this.clearQuery}
                 handleSearch={b => this.handleSearch(b)}
