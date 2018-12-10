@@ -5,6 +5,7 @@ import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import Map from './components/Map';
 import axios from 'axios';
+import SquareApi from './api';
 import 'bootstrap/dist/css/bootstrap.css';
 import CatchErrors from './components/CatchErrors';
 
@@ -49,7 +50,7 @@ class App extends Component {
       ll: '37.338208, -121.886329',
       near: 'San Jose, CA',
       v: '20183009',
-      limit: 10
+      limit: 2
     };
 
     axios
@@ -60,7 +61,7 @@ class App extends Component {
             venues: response.data.response.groups[0].items,
             allVenues: response.data.response.groups[0].items
           },
-          this.renderMap()
+          this.renderMap(),
         );
       })
       .catch(error => {
@@ -234,6 +235,7 @@ class App extends Component {
         infowindow.close(map, marker);
       });
     });
+    // this.getPhotos();
   };
 
   markerVisibility = (arr, boo) => {
@@ -262,6 +264,11 @@ class App extends Component {
     }
   };
 
+
+  
+
+
+
   render() {
     if (this.state.hasError) {
       return <div aria-label="Error">Oops, Something went wrong!</div>;
@@ -271,6 +278,7 @@ class App extends Component {
           <CatchErrors>
             <Header />
             <div id="container">
+              <Map className="p-2 bd-highlight" />
               <SearchBar
                 className="d-flex flex-row bd-highlight mb-3"
                 markers={this.state.markers}
@@ -281,7 +289,7 @@ class App extends Component {
                 clickLocation={this.clickLocation}
                 venues={this.state.venues}
               />
-              <Map className="p-2 bd-highlight" />
+              
             </div>
           </CatchErrors>
         </div>
