@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import VenueImage from './VenueImage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 class SearchBar extends Component {
   openInfo = venueId => {
@@ -10,17 +11,23 @@ class SearchBar extends Component {
     });
   };
 
+
   render() {
    
     // const myObj = {...this.props.details.bestPhoto};
 
     // let photo = myObj.prefix + '100x100' + myObj.suffix;
 
+    
+    const myObj = <FontAwesomeIcon icon="search" />
+    
+
     return (
       <div id="search-bar" className="bd-highlight">
         <div className='input-container'>
+        <div className="filterIcon"></div>
           <input
-          className="form-control text-center"
+          className="form-control form-control-sm text-center"
           type="text"
           autoFocus
           placeholder="Search"
@@ -28,13 +35,14 @@ class SearchBar extends Component {
           value={this.props.query}
           onChange={event => this.props.handleSearch(event.target.value)}
         />
+          
         </div>
         <ul className="p-2 list-group">
           
           {this.props.venues.map(listVenues => (
             
             <li
-              className="p-2 list-group-item"
+              className="list-item"
               role="menuitem"
               onClick={() => {
                 this.openInfo(listVenues.venue.id);
@@ -44,21 +52,31 @@ class SearchBar extends Component {
               id={listVenues.venue.id}
               key={listVenues.venue.id}
             >
-          <VenueImage
-          id={listVenues.venue.id}
-          {...this.props.venueDetails} 
-          />
-             {/* <img src={photo} alt='venue'/> */}
-               {/* <img className="info-image"
-                src={`${this.props.venues.bestPhoto.prefix}100x100${this.props.venues.bestPhoto.suffix}`}
-                alt={'venue'} />  */}
-              <h4 className="venue-header text-center">
-                {listVenues.venue.name}
-              </h4>
-              <p className="venue-text text-center">
-                {listVenues.venue.location.address}
-              </p>
-              <p>{listVenues.venue.id}</p>
+
+              <div className="venue-image">
+                {this.props.venueDetails.map(venue =>{
+                  if(venue.id === listVenues.venue.id){
+                    return <img
+                      key={venue.id}
+                     src={venue.bestPhoto.prefix + '72x72' + venue.bestPhoto.suffix}
+                     alt={venue.name}
+                     />;
+                  }
+                })                  
+                }
+              </div>
+              <div className='venue-info'>
+                <h4 className="venue-header text-center">
+                  {listVenues.venue.name}
+                </h4>
+                <p className="venue-text text-center">
+                  {listVenues.venue.location.address}
+                </p>
+                
+                <button
+                  key={listVenues.venue.id}
+                >View Details</button>
+              </div>    
             </li>
           ))}
         </ul>

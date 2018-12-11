@@ -8,6 +8,11 @@ import axios from 'axios';
 import SquareApi from './api';
 import 'bootstrap/dist/css/bootstrap.css';
 import CatchErrors from './components/CatchErrors';
+import { library } from '@fortawesome/fontawesome-svg-core'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faSearch)
 
 class App extends Component {
   constructor(props) {
@@ -177,7 +182,7 @@ class App extends Component {
         lat: 37.338208,
         lng: -121.886329
       },
-      zoom: 12,
+      zoom: 9,
       styles: styles
     });
 
