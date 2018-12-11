@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import VenueImage from './VenueImage';
 
 class SearchBar extends Component {
   openInfo = venueId => {
@@ -9,10 +10,10 @@ class SearchBar extends Component {
     });
   };
 
-  
   render() {
    
-    // const myObj = { ...this.props.venues.bestPhoto };
+    // const myObj = {...this.props.details.bestPhoto};
+
     // let photo = myObj.prefix + '100x100' + myObj.suffix;
 
     return (
@@ -43,16 +44,21 @@ class SearchBar extends Component {
               id={listVenues.venue.id}
               key={listVenues.venue.id}
             >
-             {/* <img src={photo} /> */}
-              {/* <img className="info-image"
-                src={`${listVenues.venue.bestPhoto.prefix}100x100${listVenues.venue.bestPhoto.suffix}`}
-                alt={'venue'} /> */}
+          <VenueImage
+          id={listVenues.venue.id}
+          {...this.props.venueDetails} 
+          />
+             {/* <img src={photo} alt='venue'/> */}
+               {/* <img className="info-image"
+                src={`${this.props.venues.bestPhoto.prefix}100x100${this.props.venues.bestPhoto.suffix}`}
+                alt={'venue'} />  */}
               <h4 className="venue-header text-center">
                 {listVenues.venue.name}
               </h4>
               <p className="venue-text text-center">
                 {listVenues.venue.location.address}
               </p>
+              <p>{listVenues.venue.id}</p>
             </li>
           ))}
         </ul>

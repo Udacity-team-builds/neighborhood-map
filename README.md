@@ -1,15 +1,30 @@
-# Neighborhood Map Project 7 for Udacity FEND
+# Team project
 
-This is Project 7 for the Udacity FEND course. This application uses the Google Maps API to insert a map and the map location markers. It also uses the Foursquare Developer API to fetch the location information. In this map, I am locating ice cream shops near San Jose, CA. You will get a list of shops and you can type in some text to filter the location.
+This application uses the Google Maps API to insert a map and the map location markers. It also uses the Foursquare Developer API to fetch the location information. In this map, I am locating ice cream shops near San Jose, CA. You will get a list of shops and you can type in some text to filter the location.
+
+
 
 ## Table of Contents
 
+- [Adding API Keys](#adding-api-keys)
 - [Creation](#creation)
 - [Instructions](#instructions)
 - [Dependencies](#dependencies)
 - [Resources](#resources)
 - [Notes](#notes)
 - [License](#license)
+
+## Adding API Keys
+
+The app uses react-google-maps and foursquare apis.
+Easy set-up:
+- create a .env file in the root directory.
+- add .env to .gitigore
+- Use the following names in the .env for your keys. 
+- REACT_APP_ID=your_4_square_id
+- REACT_APP_SECRET=your_4_square_secret
+- REACT_APP_MAP_KEY=your_g_map_key
+- The create-react-app tool uses REACT_APP_ to identify these variables. If you don't start your API key name with it, create-react-app won't see it.
 
 ## Creation
 

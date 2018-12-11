@@ -15,6 +15,7 @@ class App extends Component {
     this.state = {
       venues: [],
       allVenues: [],
+      venueDetails: [],
       markers: [],
       hiddenMarkers: [],
       query: ''
@@ -235,7 +236,7 @@ class App extends Component {
         infowindow.close(map, marker);
       });
     });
-    // this.getPhotos();
+    this.getPhotos();
   };
 
   markerVisibility = (arr, boo) => {
@@ -264,7 +265,39 @@ class App extends Component {
     }
   };
 
+  // get photos using foursquare api for each venue
+  getPhotos = () => {
+    this.state.venues.forEach(venue => {
 
+      SquareApi.getVenueDetails(venue.venue.id)
+        .then(res => {
+          const details = res.response.venue;
+          // console.log(res.response.venue.bestPhoto.prefix + '100x100' + res.response.venue.bestPhoto.suffix);
+          // const venueMatch = this.state.venues.find(venue => venue.venue.id === photo.id);
+          // const newVenue = Object.assign(venueMatch, photo);
+          // this.setState({ venueDetails: Object.assign(this.state.venues, newVenue) });
+          this.setState(() => this.state.venueDetails.push(details));
+        });
+    });
+  }
+
+
+
+  // // get photos using foursquare api for each venue
+  // getPhotos = () => {
+  //   this.state.venues.forEach(venue => {
+  //     // console.log(this.state.venues[0]);
+
+  //     SquareApi.getVenueDetails(venue.venue.id)
+  //       .then(res => {
+  //         const photo = res.response.venue;
+  //         // console.log(res.response.venue.bestPhoto.prefix + '100x100' + res.response.venue.bestPhoto.suffix);
+  //         const venueMatch = this.state.venues.find(venue => venue.venue.id === photo.id);
+  //         const newVenue = Object.assign(venueMatch, photo);
+  //         this.setState({ venues: Object.assign(this.state.venues, newVenue) });
+  //       });
+  //   });
+  // }
   
 
 
@@ -288,6 +321,7 @@ class App extends Component {
                 handleSearch={b => this.handleSearch(b)}
                 clickLocation={this.clickLocation}
                 venues={this.state.venues}
+                venueDetails={this.state.venueDetails}
               />
               
             </div>
