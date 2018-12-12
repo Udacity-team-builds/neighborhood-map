@@ -182,7 +182,7 @@ class App extends Component {
         lat: 37.338208,
         lng: -121.886329
       },
-      zoom: 9,
+      zoom: 10,
       styles: styles
     });
 
@@ -193,8 +193,9 @@ class App extends Component {
     // Display Dynamic Markers
     this.state.venues.forEach(myVenue => {
       // Create a Marker Icon
-      const markerImage = 'https://techsnazzy.com/assets/img/ice-cream.png';
-
+      // const markerImage = 'https://techsnazzy.com/assets/img/ice-cream.png';
+      
+      const markerImage = require('./imgs/icons/ice-cream-md.png');
       // Create a Marker
       const marker = new window.google.maps.Marker({
         position: {

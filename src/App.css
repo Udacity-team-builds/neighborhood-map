@@ -37,6 +37,7 @@ body {
      width: 35px;
      padding: 10px;
      background-color: #fff0;
+     /* I dont really like that icon */
      background-image: url(./imgs/icons/search.png);
      background-position: center;
      background-repeat: no-repeat;
