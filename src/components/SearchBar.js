@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Link} from 'react-router-dom';
 
 class SearchBar extends Component {
   openInfo = venueId => {
@@ -13,19 +13,12 @@ class SearchBar extends Component {
 
 
   render() {
-   
-    // const myObj = {...this.props.details.bestPhoto};
-
-    // let photo = myObj.prefix + '100x100' + myObj.suffix;
-
-    
-    const myObj = <FontAwesomeIcon icon="search" />
     
 
     return (
       <div id="search-bar" className="bd-highlight">
         <div className='input-container'>
-        <div className="filterIcon"></div>
+          <FontAwesomeIcon className="filterIcon" icon="search" />
           <input
           className="form-control form-control-sm text-center"
           type="text"
@@ -73,9 +66,20 @@ class SearchBar extends Component {
                   {listVenues.venue.location.address}
                 </p>
                 
-                <button
+                <div>
+                  <Link
+                    className='button'
+                    key={listVenues.venue.id}
+                    to='/details'
+                  >
+                    View Details
+                  </Link>
+                </div>
+              
+
+                {/* <button
                   key={listVenues.venue.id}
-                >View Details</button>
+                >View Details</button> */}
               </div>    
             </li>
           ))}
