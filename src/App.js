@@ -13,21 +13,17 @@ library.add(faSearch)
 class App extends Component {
 
   render() {
+    
       return (
         <div className="App" role="main">
 
         {/* main page */}
-          <Route exact path='/' render={() => (
-            <MainPage
-            />
-          )}
-          />
+          <Route exact path='/' component={MainPage} />
 
           {/* Dynamic venue details page */}
-          <Route path='/details' render={() => (
-            <DetailsPage
-            />
-          )}
+          <Route path='/details' render={(props) => (
+            <DetailsPage {...props} />
+          )} 
           />
         </div>
       );

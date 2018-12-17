@@ -13,7 +13,7 @@ class SearchBar extends Component {
 
 
   render() {
-    
+    // var match = this.props.match;
 
     return (
       <div id="search-bar" className="bd-highlight">
@@ -32,7 +32,7 @@ class SearchBar extends Component {
         </div>
         <ul className="p-2 list-group">
           
-          {this.props.venues.map(listVenues => (
+          {this.props.venues.map((listVenues, index) => (
             
             <li
               className="list-item"
@@ -45,7 +45,7 @@ class SearchBar extends Component {
               id={listVenues.venue.id}
               key={listVenues.venue.id}
             >
-
+              {/* image from venue details */}
               <div className="venue-image">
                 {this.props.venueDetails.map(venue =>{
                   if(venue.id === listVenues.venue.id){
@@ -58,6 +58,7 @@ class SearchBar extends Component {
                 })                  
                 }
               </div>
+
               <div className='venue-info'>
                 <h4 className="venue-header text-center">
                   {listVenues.venue.name}
@@ -70,12 +71,28 @@ class SearchBar extends Component {
                   <Link
                     className='button'
                     key={listVenues.venue.id}
-                    to='/details'
+                    to={{
+                      pathname: '/details', 
+                      state: {
+                        details: this.props.venueDetails[index]
+                      }
+                    }}
                   >
                     View Details
                   </Link>
                 </div>
               
+
+              {/* {listVenues && 
+                <Link
+                  className='button'
+                  to={{
+                    pathname: match.url + '/details',
+                    search: `?details=` + listVenues.venue.name
+                  }}>
+                  View Details
+                </Link>
+                }  */}
 
                 {/* <button
                   key={listVenues.venue.id}
